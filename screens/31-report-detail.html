@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F5F7FB">
+<title>CBC report · Zeenat Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400..500,0..1,0&display=block">
+<link rel="stylesheet" href="../design-system/tokens.css">
+<link rel="stylesheet" href="../design-system/components.css">
+<script src="../scripts/app.js" defer></script>
+<style>
+  .result { padding: var(--s4); }
+  .result + .result { border-top: 1px solid var(--line); }
+  .result__value { font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+  .result__unit { font-size: 12px; color: var(--ink-3); font-weight: 500; margin-left: 2px; }
+  .spark { width: 100%; height: 64px; }
+  .spark path { fill: none; stroke: var(--primary); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 400; stroke-dashoffset: 400; animation: draw 1.2s var(--ease-out) .4s forwards; }
+  .spark .area { fill: url(#g); stroke: none; opacity: 0; animation: fade-in .6s ease 1s forwards; }
+  .spark circle { fill: #fff; stroke: var(--primary); stroke-width: 2.5; opacity: 0; animation: pop-in .3s var(--ease-spring) forwards; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a class="icon-btn" href="30-reports.html" aria-label="Back"><span class="icon">arrow_back</span></a>
+      <div class="topbar__title">CBC report</div>
+      <button class="icon-btn" aria-label="Download PDF" data-toast="PDF saved to Downloads" data-toast-icon="download"><span class="icon">download</span></button>
+    </div>
+  </header>
+
+  <main class="page page--flow" data-stagger>
+    <section class="card row">
+      <span class="avatar">TM</span>
+      <span class="grow">
+        <strong class="t-strong" style="display:block">Tariq Mahmood</strong>
+        <span class="t-xs t-muted">Collected 17 Nov · Reported 1:15 PM</span>
+      </span>
+      <span class="badge badge--ok"><span class="icon icon--fill">verified</span>Verified</span>
+    </section>
+
+    <section>
+      <div class="section-head"><h2>Needs attention</h2></div>
+      <div class="card card--flush" id="flagged"></div>
+      <div class="notice" style="margin-top:var(--s3)">
+        <span class="icon">info</span>
+        <p>Slightly high white cells are common during a minor infection. Show this to your doctor, especially if you have a fever.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head"><h2>Haemoglobin trend</h2><span class="t-xs t-faint">Last 3 tests</span></div>
+      <div class="card">
+        <svg class="spark" viewBox="0 0 300 64" preserveAspectRatio="none" aria-label="Haemoglobin: 13.1 in January, 13.8 in August, 14.2 in November">
+          <defs><linearGradient id="g" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#0F367A" stop-opacity=".16"/><stop offset="1" stop-color="#0F367A" stop-opacity="0"/></linearGradient></defs>
+          <path class="area" d="M10 50 L150 28 L290 14 L290 64 L10 64 Z"/>
+          <path d="M10 50 L150 28 L290 14"/>
+          <circle cx="10" cy="50" r="4.5" style="animation-delay:.5s"/>
+          <circle cx="150" cy="28" r="4.5" style="animation-delay:.9s"/>
+          <circle cx="290" cy="14" r="4.5" style="animation-delay:1.3s"/>
+        </svg>
+        <div class="range-labels" style="margin-top:var(--s2)"><span>Jan · 13.1</span><span>Aug · 13.8</span><span class="t-strong" style="color:var(--ink)">Nov · 14.2</span></div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head"><h2>In normal range</h2><button class="link" id="toggle">Show all</button></div>
+      <div class="card card--flush" id="normal"></div>
+    </section>
+
+    <p class="t-xs t-faint center">This view helps you read your report. Your doctor should interpret the results.</p>
+  </main>
+
+  <div class="action-bar">
+    <button class="btn btn--secondary" data-toast="PDF saved to Downloads" data-toast-icon="download"><span class="icon icon--sm">download</span>PDF</button>
+    <button class="btn btn--primary" data-toast="Opening WhatsApp…" data-toast-icon="share"><span class="icon icon--sm">share</span>Share</button>
+  </div>
+</div>
+<script>
+  // value, reference range, unit
+  const results = [
+    { name: "White blood cells (WBC)", v: 11.8, lo: 4.0,  hi: 11.0, unit: "×10⁹/L" },
+    { name: "Haemoglobin",             v: 14.2, lo: 13.0, hi: 17.0, unit: "g/dL" },
+    { name: "Platelets",               v: 250,  lo: 150,  hi: 400,  unit: "×10⁹/L" },
+    { name: "Red blood cells (RBC)",   v: 4.9,  lo: 4.5,  hi: 5.5,  unit: "×10¹²/L" },
+    { name: "Haematocrit",             v: 43,   lo: 40,   hi: 50,   unit: "%" },
+    { name: "MCV",                     v: 88,   lo: 80,   hi: 100,  unit: "fL" },
+    { name: "MCH",                     v: 29.5, lo: 27,   hi: 32,   unit: "pg" },
+    { name: "Neutrophils",             v: 62,   lo: 40,   hi: 75,   unit: "%" },
+    { name: "Lymphocytes",             v: 30,   lo: 20,   hi: 45,   unit: "%" },
+  ];
+
+  function row(r, i) {
+    const span = r.hi - r.lo, min = r.lo - span * 0.5, max = r.hi + span * 0.5;
+    const pct = (x) => Math.max(2, Math.min(98, ((x - min) / (max - min)) * 100));
+    const flag = r.v > r.hi ? "high" : r.v < r.lo ? "low" : "";
+    return `<div class="result">
+      <div class="row-between">
+        <span class="t-sm t-strong">${r.name}</span>
+        <span><span class="result__value ${flag ? "t-warn" : ""}">${r.v}</span><span class="result__unit">${r.unit}</span></span>
+      </div>
+      <div class="range"><span class="range__ok" style="left:${pct(r.lo)}%;right:${100 - pct(r.hi)}%"></span><span class="range__marker ${flag ? "range__marker--" + flag : ""}" style="left:${pct(r.v)}%;--i:${i}"></span></div>
+      <div class="range-labels"><span>${flag ? `<strong class="t-warn">${flag === "high" ? "High" : "Low"}</strong>` : "Normal"}</span><span>Normal ${r.lo} – ${r.hi}</span></div>
+    </div>`;
+  }
+
+  const flagged = results.filter((r) => r.v > r.hi || r.v < r.lo);
+  const normal = results.filter((r) => !flagged.includes(r));
+  document.getElementById("flagged").innerHTML = flagged.map(row).join("");
+  const normalEl = document.getElementById("normal");
+  let all = false;
+  const renderNormal = () => (normalEl.innerHTML = (all ? normal : normal.slice(0, 3)).map(row).join(""));
+  renderNormal();
+  document.getElementById("toggle").addEventListener("click", (e) => {
+    all = !all; renderNormal();
+    e.target.textContent = all ? "Show less" : `Show all ${normal.length}`;
+  });
+  document.getElementById("toggle").textContent = `Show all ${normal.length}`;
+</script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F5F7FB">
+<title>Booking confirmed · Zeenat Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400..500,0..1,0&display=block">
+<link rel="stylesheet" href="../design-system/tokens.css">
+<link rel="stylesheet" href="../design-system/components.css">
+<script src="../scripts/app.js" defer></script>
+<style>
+  .hero { padding: calc(var(--safe-top) + 48px) var(--gutter) 0; text-align: center; }
+  .confetti { position: absolute; inset: 0 0 auto; height: 260px; pointer-events: none; overflow: hidden; }
+  .confetti i { position: absolute; top: -10px; width: 6px; height: 10px; border-radius: 2px; opacity: 0; animation: fall 1.6s var(--ease-out) forwards; }
+  @keyframes fall { 0% { opacity: 1; transform: translateY(0) rotate(0); } 100% { opacity: 0; transform: translateY(240px) rotate(360deg); } }
+  .check li { display: flex; gap: var(--s3); align-items: flex-start; padding: var(--s3) 0; list-style: none; }
+  .check li + li { border-top: 1px solid var(--line); }
+  .check .icon { color: var(--primary); font-size: 20px; }
+  .switch { width: 46px; height: 28px; border-radius: 14px; background: var(--line-2); position: relative; flex-shrink: 0; transition: background var(--t-med); }
+  .switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.2); transition: transform var(--t-med) var(--ease-spring); }
+  .switch[aria-checked="true"] { background: var(--ok); }
+  .switch[aria-checked="true"]::after { transform: translateX(18px); }
+</style>
+</head>
+<body data-cart-default="cbc,fbs">
+<div class="app" style="position:relative">
+  <div class="confetti" id="confetti" aria-hidden="true"></div>
+
+  <section class="hero stack" data-stagger>
+    <svg class="success-mark" viewBox="0 0 84 84" aria-hidden="true"><circle cx="42" cy="42" r="42"/><path d="M28 43l10 10 19-21"/></svg>
+    <h1 class="t-title">Booking confirmed</h1>
+    <p class="t-muted"><span id="v-date">Tomorrow</span> · <span id="v-slot" class="num">8:00 – 9:00 AM</span></p>
+    <button class="badge" style="align-self:center;height:30px;padding:0 12px" data-toast="Booking ID copied" data-toast-icon="content_copy">
+      <span class="num">#ZL-48210</span><span class="icon">content_copy</span>
+    </button>
+  </section>
+
+  <main class="page page--plain" data-stagger style="padding-top:var(--s6)">
+    <section class="card">
+      <h2 class="t-strong" style="margin-bottom:var(--s1)">Before your visit</h2>
+      <ul class="check" style="margin:0;padding:0">
+        <li data-cart-fasting hidden><span class="icon">no_food</span><span class="t-sm">Don't eat for <strong data-fast-hours>10</strong> hours before. Water is fine.</span></li>
+        <li><span class="icon">checkroom</span><span class="t-sm">Wear a shirt with loose sleeves.</span></li>
+        <li><span class="icon">badge</span><span class="t-sm">Keep your CNIC handy for verification.</span></li>
+      </ul>
+      <hr class="divider" style="margin:var(--s2) 0 var(--s3)">
+      <div class="row">
+        <span class="grow"><strong class="t-sm t-strong" style="display:block">Remind me the night before</strong><span class="t-xs t-muted">At 9 PM, with fasting time</span></span>
+        <button class="switch" role="switch" aria-checked="true" aria-label="Reminder" id="remind"></button>
+      </div>
+    </section>
+
+    <section class="card card--flush list">
+      <a class="list-item" href="17-live-tracking.html">
+        <span class="list-item__icon"><span class="icon">near_me</span></span>
+        <span class="grow"><strong class="t-sm t-strong" style="display:block">Track your visit</strong><span class="t-xs t-muted">Live on the day of collection</span></span>
+        <span class="icon list-item__chev">chevron_right</span>
+      </a>
+      <button class="list-item" style="width:100%;text-align:left" data-toast="Added to your calendar" data-toast-icon="event">
+        <span class="list-item__icon"><span class="icon">calendar_add_on</span></span>
+        <span class="grow"><strong class="t-sm t-strong" style="display:block">Add to calendar</strong></span>
+        <span class="icon list-item__chev">chevron_right</span>
+      </button>
+    </section>
+
+    <section class="card">
+      <div data-cart-lines></div>
+      <hr class="divider" style="margin:var(--s2) 0">
+      <div class="row-between"><span class="t-sm t-muted">Pay at visit</span><strong class="num" data-cart-total>Rs 0</strong></div>
+    </section>
+
+    <a class="btn btn--primary btn--block" href="10-home.html" id="done">Done</a>
+    <a class="link" data-helpline href="#" style="align-self:center"><span class="icon icon--xs">call</span>Need help? Call us</a>
+  </main>
+</div>
+<script>
+  // light confetti burst in brand colours
+  const c = document.getElementById("confetti");
+  const colours = ["#0F367A", "#2B7DE9", "#8CC63F", "#F5B942"];
+  for (let i = 0; i < 28; i++) {
+    const p = document.createElement("i");
+    p.style.left = Math.random() * 100 + "%";
+    p.style.background = colours[i % colours.length];
+    p.style.animationDelay = (0.3 + Math.random() * 0.5) + "s";
+    p.style.animationDuration = (1.2 + Math.random() * 0.9) + "s";
+    c.appendChild(p);
+  }
+  document.getElementById("remind").addEventListener("click", (e) => {
+    const on = e.currentTarget.getAttribute("aria-checked") !== "true";
+    e.currentTarget.setAttribute("aria-checked", on);
+    ZL.toast(on ? "Reminder on" : "Reminder off", on ? "notifications_active" : "notifications_off");
+  });
+  document.addEventListener("DOMContentLoaded", () => {
+    const v = ZL.store.get("visit", null);
+    if (v) { document.getElementById("v-date").textContent = v.date; document.getElementById("v-slot").textContent = v.slot; }
+    // the booking is placed — next time the cart starts fresh
+    document.getElementById("done").addEventListener("click", () => ZL.store.set("cart", []));
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F5F7FB">
+<title>Home · Zeenat Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400..500,0..1,0&display=block">
+<link rel="stylesheet" href="../design-system/tokens.css">
+<link rel="stylesheet" href="../design-system/components.css">
+<script src="../scripts/app.js" defer></script>
+<style>
+  .eta-track { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-top: var(--s4); }
+  .eta-track span { height: 4px; border-radius: 4px; background: var(--surface-2); }
+  .eta-track span.on { background: var(--primary); }
+  .eta-track span.live { background: linear-gradient(90deg, var(--primary) 0 50%, var(--surface-2) 50%); background-size: 200% 100%; animation: fill-live 2.4s var(--ease-out) infinite alternate; }
+  @keyframes fill-live { from { background-position: 100% 0; } to { background-position: 30% 0; } }
+  .test-row { display: flex; align-items: center; gap: var(--s3); padding: 14px var(--s4); }
+  .test-row + .test-row { border-top: 1px solid var(--line); }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="topbar__inner">
+      <div class="topbar__brand"><span class="brand"><img src="../assets/logo-mark.svg" alt="">Zeenat Lab</span></div>
+      <a class="icon-btn" href="43-notifications.html" aria-label="Notifications, 2 unread"><span class="icon">notifications</span><span class="dot-badge"></span></a>
+      <button class="patient-pill" data-patient-switch aria-label="Change patient">
+        <span class="avatar avatar--sm avatar--solid" data-patient-initials>TM</span><span class="icon">expand_more</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="page page--cart" data-stagger>
+    <section class="stack">
+      <h1 class="t-title"><span id="greet">Hello</span>, <span data-patient-first>Tariq</span></h1>
+      <a class="search" href="11-tests.html?search=1" aria-label="Search tests">
+        <span class="icon">search</span><span class="t-faint">Search tests or packages</span>
+      </a>
+    </section>
+
+    <!-- Active booking -->
+    <a class="card card--tap" href="17-live-tracking.html">
+      <div class="row-between">
+        <span class="badge badge--info"><span class="badge__dot badge__dot--live"></span>On the way</span>
+        <span class="t-xs t-faint num">#ZL-48210</span>
+      </div>
+      <div class="row" style="margin-top:var(--s3)">
+        <div class="grow">
+          <h2 class="t-h">Rizwan arrives in ~12 min</h2>
+          <p class="t-sm t-muted truncate">CBC, Fasting Blood Sugar · Today 8–9 AM</p>
+        </div>
+        <span class="icon-btn icon-btn--surface"><span class="icon">arrow_forward</span></span>
+      </div>
+      <div class="eta-track" aria-hidden="true"><span class="on"></span><span class="live"></span><span></span><span></span></div>
+    </a>
+
+    <!-- Quick actions -->
+    <section class="grid-2">
+      <a class="tile" href="11-tests.html">
+        <span class="tile__icon"><span class="icon">home_health</span></span>
+        <span><strong class="t-strong" style="display:block">Book a test</strong><span class="t-xs t-muted">We collect at home</span></span>
+      </a>
+      <a class="tile" href="13-upload-prescription.html">
+        <span class="tile__icon" style="background:var(--warn-bg);color:var(--warn)"><span class="icon">photo_camera</span></span>
+        <span><strong class="t-strong" style="display:block">Upload prescription</strong><span class="t-xs t-muted">We'll pick the tests</span></span>
+      </a>
+    </section>
+
+    <!-- New report -->
+    <a class="card card--tap row" href="31-report-detail.html">
+      <span class="list-item__icon" style="background:var(--ok-bg);color:var(--ok)"><span class="icon icon--fill">task</span></span>
+      <span class="grow">
+        <strong class="t-strong" style="display:block">Your CBC report is ready</strong>
+        <span class="t-xs t-muted">1 value needs attention</span>
+      </span>
+      <span class="icon list-item__chev">chevron_right</span>
+    </a>
+
+    <!-- Popular tests -->
+    <section>
+      <div class="section-head"><h2>Popular tests</h2><a class="link" href="11-tests.html">See all</a></div>
+      <div class="card card--flush">
+        <div class="test-row">
+          <a class="grow" href="12-test-detail.html"><strong class="t-strong t-sm" style="display:block">Complete Blood Count (CBC)</strong><span class="t-xs t-muted num">Rs 950 · Same day</span></a>
+          <button class="add-btn" data-add="cbc"><span class="icon">add</span>Add</button>
+        </div>
+        <div class="test-row">
+          <a class="grow" href="12-test-detail.html"><strong class="t-strong t-sm" style="display:block">HbA1c</strong><span class="t-xs t-muted num">Rs 1,450 · Same day</span></a>
+          <button class="add-btn" data-add="hba1c"><span class="icon">add</span>Add</button>
+        </div>
+        <div class="test-row">
+          <a class="grow" href="12-test-detail.html"><strong class="t-strong t-sm" style="display:block">Lipid Profile</strong><span class="t-xs t-muted num">Rs 2,100 · 12 hr fasting</span></a>
+          <button class="add-btn" data-add="lipid"><span class="icon">add</span>Add</button>
+        </div>
+        <div class="test-row">
+          <a class="grow" href="12-test-detail.html"><strong class="t-strong t-sm" style="display:block">Vitamin D</strong><span class="t-xs t-muted num">Rs 2,900 · 2 days</span></a>
+          <button class="add-btn" data-add="vitd"><span class="icon">add</span>Add</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Package -->
+    <section class="card card--lg card--hero stack">
+      <span class="badge badge--glass" style="align-self:flex-start">58 tests</span>
+      <div>
+        <h2 class="t-h" style="font-size:19px">Full Body Checkup</h2>
+        <p class="t-sm" style="color:rgba(255,255,255,.72);margin-top:4px">Blood count, sugar, liver, kidney, lipids, thyroid and urine.</p>
+      </div>
+      <div class="row-between" style="margin-top:var(--s2)">
+        <div><strong class="num" style="font-size:20px">Rs 5,999</strong> <span class="t-sm num" style="color:rgba(255,255,255,.5);text-decoration:line-through">8,500</span></div>
+        <button class="btn btn--white btn--sm" data-add="fullbody"><span class="icon">add</span>Add</button>
+      </div>
+    </section>
+
+    <a class="card card--soft row" data-helpline href="#">
+      <span class="icon" style="color:var(--primary)">support_agent</span>
+      <span class="grow t-sm">Not sure which test you need? <strong class="t-primary">Talk to us</strong></span>
+    </a>
+  </main>
+
+  <div class="cartbar" data-cartbar hidden>
+    <span class="cartbar__count num" data-cart-count>0</span>
+    <span class="grow"><strong class="t-sm" style="display:block" data-cart-label>0 tests</strong><span class="t-xs num" style="opacity:.7" data-cart-total>Rs 0</span></span>
+    <a class="btn" href="14-schedule.html">Continue<span class="icon icon--sm">arrow_forward</span></a>
+  </div>
+
+  <nav data-tabbar="home"></nav>
+</div>
+<script>
+  const h = new Date().getHours();
+  document.getElementById("greet").textContent = h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening";
+</script>
+</body>
+</html>

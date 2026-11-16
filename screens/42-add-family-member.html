@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F5F7FB">
+<title>Add family member · Zeenat Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400..500,0..1,0&display=block">
+<link rel="stylesheet" href="../design-system/tokens.css">
+<link rel="stylesheet" href="../design-system/components.css">
+<script src="../scripts/app.js" defer></script>
+<style>
+  .wrap-chips { display: flex; flex-wrap: wrap; gap: var(--s2); }
+  .live-avatar { transition: transform var(--t-med) var(--ease-spring); }
+  .live-avatar.bump { animation: bump .35s var(--ease-spring); }
+  .error { font-size: var(--fs-xs); color: var(--alert); }
+  .input.is-error { border-color: var(--alert); animation: shake .4s; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a class="icon-btn" href="41-family.html" aria-label="Back"><span class="icon">close</span></a>
+      <div class="topbar__title">Add family member</div>
+      <span class="topbar__spacer"></span>
+    </div>
+  </header>
+
+  <main class="page page--flow" data-stagger>
+    <div class="center"><span class="avatar avatar--xl live-avatar" id="preview" style="margin:0 auto"><span class="icon icon--lg">person</span></span></div>
+
+    <div class="field">
+      <label class="label" for="name">Full name</label>
+      <input class="input" id="name" autocomplete="off" placeholder="As on CNIC or B-Form">
+      <span class="error" id="name-err" hidden>Please enter a name</span>
+    </div>
+
+    <div class="field">
+      <span class="label">Relationship</span>
+      <div class="wrap-chips" data-choice id="rel" role="radiogroup" aria-label="Relationship">
+        <button class="chip is-active" data-value="Mother">Mother</button>
+        <button class="chip" data-value="Father">Father</button>
+        <button class="chip" data-value="Wife">Wife</button>
+        <button class="chip" data-value="Husband">Husband</button>
+        <button class="chip" data-value="Son">Son</button>
+        <button class="chip" data-value="Daughter">Daughter</button>
+        <button class="chip" data-value="Other">Other</button>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div class="field">
+        <label class="label" for="dob">Date of birth</label>
+        <input class="input num" id="dob" type="date" max="2026-11-17">
+      </div>
+      <div class="field">
+        <span class="label">Gender</span>
+        <div class="segmented" data-choice id="gender" role="radiogroup" aria-label="Gender">
+          <button class="is-active" data-value="Female">F</button>
+          <button data-value="Male">M</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="label" for="phone">Mobile <span class="opt">(optional)</span></label>
+      <input class="input num" id="phone" type="tel" inputmode="numeric" placeholder="03XX XXXXXXX">
+      <span class="t-xs t-faint">We'll also send their reports here.</span>
+    </div>
+  </main>
+
+  <div class="action-bar">
+    <button class="btn btn--primary" id="save">Save</button>
+  </div>
+
+  <div class="sheet" id="added-sheet" role="dialog" aria-label="Member added" aria-hidden="true">
+    <div class="sheet__handle"></div>
+    <div class="stack center" style="padding:var(--s2) 0 var(--s5)">
+      <svg class="success-mark" viewBox="0 0 84 84" aria-hidden="true"><circle cx="42" cy="42" r="42"/><path d="M28 43l10 10 19-21"/></svg>
+      <h2 class="t-title"><span class="first">Zainab</span> is added</h2>
+      <p class="t-muted">You can now book tests and see reports for <span class="first">Zainab</span>.</p>
+    </div>
+    <a class="btn btn--primary btn--block" href="11-tests.html" id="book-for">Book a test for <span class="first">Zainab</span></a>
+    <a class="btn btn--ghost btn--block" href="41-family.html" style="margin-top:var(--s2)">Done</a>
+  </div>
+</div>
+<script>
+  const name = document.getElementById("name");
+  const preview = document.getElementById("preview");
+  const initials = (s) => s.trim().split(/\s+/).slice(0, 2).map((w) => w[0]?.toUpperCase() || "").join("");
+
+  name.addEventListener("input", () => {
+    const i = initials(name.value);
+    const was = preview.textContent;
+    preview.innerHTML = i || '<span class="icon icon--lg">person</span>';
+    if (i && i !== was) { preview.classList.remove("bump"); void preview.offsetWidth; preview.classList.add("bump"); }
+    name.classList.remove("is-error"); document.getElementById("name-err").hidden = true;
+  });
+
+  document.getElementById("save").addEventListener("click", () => {
+    if (!name.value.trim()) {
+      name.classList.remove("is-error"); void name.offsetWidth; name.classList.add("is-error");
+      document.getElementById("name-err").hidden = false; name.focus(); return;
+    }
+    const first = name.value.trim().split(/\s+/)[0];
+    document.querySelectorAll(".first").forEach((el) => (el.textContent = first));
+    ZL.openSheet("added-sheet");
+  });
+</script>
+</body>
+</html>

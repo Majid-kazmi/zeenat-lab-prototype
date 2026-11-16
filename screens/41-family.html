@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F5F7FB">
+<title>Family · Zeenat Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400..500,0..1,0&display=block">
+<link rel="stylesheet" href="../design-system/tokens.css">
+<link rel="stylesheet" href="../design-system/components.css">
+<script src="../scripts/app.js" defer></script>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a class="icon-btn" href="40-profile.html" aria-label="Back"><span class="icon">arrow_back</span></a>
+      <div class="topbar__title">Family</div>
+      <span class="topbar__spacer"></span>
+    </div>
+  </header>
+
+  <main class="page" data-stagger>
+    <p class="t-sm t-muted">Book tests and keep reports for everyone in one place.</p>
+
+    <div class="card card--flush list" id="members"></div>
+
+    <a class="card card--tap row" href="42-add-family-member.html" style="border-style:dashed;box-shadow:none">
+      <span class="list-item__icon" style="background:var(--primary);color:#fff"><span class="icon">person_add</span></span>
+      <span class="grow t-strong">Add family member</span>
+      <span class="icon list-item__chev">chevron_right</span>
+    </a>
+  </main>
+
+  <div class="sheet" id="member-sheet" role="dialog" aria-label="Member actions" aria-hidden="true">
+    <div class="sheet__handle"></div>
+    <div class="row" style="margin-bottom:var(--s4)">
+      <span class="avatar avatar--lg" id="m-initials"></span>
+      <span class="grow"><strong class="t-h" style="display:block" id="m-name"></strong><span class="t-sm t-muted" id="m-meta"></span></span>
+    </div>
+    <div class="card card--flush list">
+      <a class="list-item" href="11-tests.html" id="m-book"><span class="list-item__icon"><span class="icon">science</span></span><span class="grow t-sm t-strong">Book a test for <span class="m-first"></span></span></a>
+      <a class="list-item" href="30-reports.html"><span class="list-item__icon"><span class="icon">description</span></span><span class="grow t-sm t-strong">View reports</span></a>
+      <button class="list-item" style="width:100%;text-align:left" data-toast="Edit details opens here" data-toast-icon="edit"><span class="list-item__icon"><span class="icon">edit</span></span><span class="grow t-sm t-strong">Edit details</span></button>
+    </div>
+    <button class="btn btn--ghost btn--block" id="m-remove" style="color:var(--alert);margin-top:var(--s3)">Remove from family</button>
+  </div>
+
+  <nav data-tabbar="profile"></nav>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const list = document.getElementById("members");
+    let current;
+    list.innerHTML = Object.entries(ZL.PEOPLE).map(([id, p]) => `
+      <button class="list-item" style="width:100%;text-align:left" data-member="${id}">
+        <span class="avatar ${id === "self" ? "avatar--solid" : ""}">${p.initials}</span>
+        <span class="grow"><strong class="t-sm t-strong" style="display:block">${p.name}</strong><span class="t-xs t-muted">${p.rel} · ${p.meta}</span></span>
+        <span class="icon list-item__chev">more_horiz</span>
+      </button>`).join("");
+
+    list.addEventListener("click", (e) => {
+      const b = e.target.closest("[data-member]");
+      if (!b) return;
+      current = b.dataset.member;
+      const p = ZL.PEOPLE[current];
+      document.getElementById("m-initials").textContent = p.initials;
+      document.getElementById("m-name").textContent = p.name;
+      document.getElementById("m-meta").textContent = `${p.rel} · ${p.meta}`;
+      document.querySelectorAll(".m-first").forEach((el) => (el.textContent = current === "self" ? "yourself" : p.first));
+      document.getElementById("m-remove").hidden = current === "self";
+      ZL.openSheet("member-sheet");
+    });
+
+    document.getElementById("m-book").addEventListener("click", () => ZL.store.set("patient", current));
+    document.getElementById("m-remove").addEventListener("click", () => {
+      const row = list.querySelector(`[data-member="${current}"]`);
+      ZL.closeSheets();
+      row.style.transition = "opacity .3s, transform .3s"; row.style.opacity = 0; row.style.transform = "translateX(-12px)";
+      setTimeout(() => row.remove(), 300);
+      ZL.toast(`${ZL.PEOPLE[current].first} removed`, "person_remove");
+    });
+  });
+</script>
+</body>
+</html>

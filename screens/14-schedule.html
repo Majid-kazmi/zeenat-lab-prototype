@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F5F7FB">
+<title>Schedule · Zeenat Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400..500,0..1,0&display=block">
+<link rel="stylesheet" href="../design-system/tokens.css">
+<link rel="stylesheet" href="../design-system/components.css">
+<script src="../scripts/app.js" defer></script>
+<style>
+  [hidden] { display: none !important; }
+  .swap { animation: fade-up .35s var(--ease-out) both; }
+</style>
+</head>
+<body data-cart-default="cbc,fbs">
+<div class="app">
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a class="icon-btn" href="11-tests.html" aria-label="Back"><span class="icon">arrow_back</span></a>
+      <div class="topbar__title">Schedule visit<small>Step 1 of 2</small></div>
+      <span class="topbar__spacer"></span>
+    </div>
+    <div class="steps" aria-hidden="true"><span class="is-current"></span><span></span></div>
+  </header>
+
+  <main class="page page--flow" data-stagger>
+    <!-- Tests -->
+    <section class="card">
+      <div class="row-between" style="margin-bottom:var(--s2)">
+        <h2 class="t-strong">Your tests</h2>
+        <a class="link" href="11-tests.html">Edit</a>
+      </div>
+      <div data-cart-lines></div>
+      <div class="notice notice--warn" data-cart-fasting hidden style="margin-top:var(--s3)">
+        <span class="icon">no_food</span>
+        <p>Fast for <strong data-fast-hours>10</strong> hours before the visit. Water is fine. Morning slots work best.</p>
+      </div>
+    </section>
+
+    <!-- Patient -->
+    <section class="card row">
+      <span class="avatar" data-patient-initials>TM</span>
+      <span class="grow"><span class="t-xs t-faint" style="display:block">Patient</span><strong class="t-strong" data-patient-name>Tariq Mahmood</strong></span>
+      <button class="btn btn--secondary btn--sm" data-patient-switch>Change</button>
+    </section>
+
+    <!-- Where -->
+    <section class="stack">
+      <h2 class="t-strong">Where</h2>
+      <div class="segmented" data-choice id="mode" role="radiogroup">
+        <button class="is-active" data-value="home"><span class="icon icon--sm">home</span>At home</button>
+        <button data-value="lab"><span class="icon icon--sm">apartment</span>At a branch</button>
+      </div>
+
+      <button class="card row card--tap" id="address" data-sheet-open="address-sheet" style="text-align:left;width:100%">
+        <span class="list-item__icon"><span class="icon">location_on</span></span>
+        <span class="grow"><strong class="t-sm t-strong" style="display:block" id="addr-title">Home</strong><span class="t-xs t-muted" id="addr-line">Flat 4B, Al-Hafeez Heights, Gulberg III, Lahore</span></span>
+        <span class="link">Change</span>
+      </button>
+
+      <div class="stack-sm" id="branches" data-choice hidden>
+        <button class="option is-active" data-value="Gulberg branch">
+          <span class="grow"><strong class="t-sm t-strong" style="display:block">Gulberg branch</strong><span class="t-xs t-muted">Main Boulevard · 1.2 km · Open till 10 PM</span></span>
+          <span class="option__radio"></span>
+        </button>
+        <button class="option" data-value="Model Town branch">
+          <span class="grow"><strong class="t-sm t-strong" style="display:block">Model Town branch</strong><span class="t-xs t-muted">Link Road · 4.8 km · Open 24 hours</span></span>
+          <span class="option__radio"></span>
+        </button>
+      </div>
+    </section>
+
+    <!-- When -->
+    <section class="stack">
+      <div class="row-between"><h2 class="t-strong">When</h2><span class="t-xs t-faint" id="month"></span></div>
+      <div class="date-strip" data-choice id="dates" role="radiogroup" aria-label="Date"></div>
+      <div class="slots" data-choice id="slots" role="radiogroup" aria-label="Time">
+        <button class="slot" data-value="7:00 – 8:00 AM">7 – 8 AM</button>
+        <button class="slot is-active" data-value="8:00 – 9:00 AM">8 – 9 AM</button>
+        <button class="slot" data-value="9:00 – 10:00 AM">9 – 10 AM<small>1 spot left</small></button>
+        <button class="slot is-disabled" data-value="10:00 – 11:00 AM" aria-disabled="true">10 – 11 AM</button>
+        <button class="slot" data-value="4:00 – 5:00 PM">4 – 5 PM</button>
+        <button class="slot" data-value="5:00 – 6:00 PM">5 – 6 PM</button>
+      </div>
+    </section>
+  </main>
+
+  <div class="action-bar">
+    <div class="action-bar__sum"><small>Total</small><strong data-cart-total>Rs 0</strong></div>
+    <a class="btn btn--primary" href="15-checkout.html" id="next" data-cart-needs-items>Continue</a>
+  </div>
+
+  <!-- Address picker -->
+  <div class="sheet" id="address-sheet" role="dialog" aria-label="Choose address" aria-hidden="true">
+    <div class="sheet__handle"></div>
+    <h2 class="sheet__title">Collection address</h2>
+    <div class="stack-sm" data-choice id="addr-list">
+      <button class="option is-active" data-value="home" data-title="Home" data-line="Flat 4B, Al-Hafeez Heights, Gulberg III, Lahore">
+        <span class="list-item__icon"><span class="icon">home</span></span>
+        <span class="grow"><strong class="t-sm t-strong" style="display:block">Home</strong><span class="t-xs t-muted">Flat 4B, Al-Hafeez Heights, Gulberg III</span></span>
+        <span class="option__radio"></span>
+      </button>
+      <button class="option" data-value="parents" data-title="Parents' house" data-line="House 42, Block C, Model Town, Lahore">
+        <span class="list-item__icon"><span class="icon">cottage</span></span>
+        <span class="grow"><strong class="t-sm t-strong" style="display:block">Parents' house</strong><span class="t-xs t-muted">House 42, Block C, Model Town</span></span>
+        <span class="option__radio"></span>
+      </button>
+    </div>
+    <button class="btn btn--ghost btn--block" style="margin-top:var(--s3)" data-toast="Map picker opens here" data-toast-icon="map"><span class="icon">add_location</span>Add new address</button>
+  </div>
+</div>
+<script>
+  // Next 7 days, starting today. Tomorrow is pre-selected.
+  const strip = document.getElementById("dates");
+  const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const now = new Date();
+  document.getElementById("month").textContent = now.toLocaleString("en", { month: "long", year: "numeric" });
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(now); d.setDate(now.getDate() + i);
+    const label = i === 0 ? "Today" : i === 1 ? "Tmrw" : days[d.getDay()];
+    const full = i === 0 ? "Today" : i === 1 ? "Tomorrow" : d.toLocaleDateString("en", { weekday: "short", day: "numeric", month: "short" });
+    strip.insertAdjacentHTML("beforeend",
+      `<button class="date${i === 1 ? " is-active" : ""}" data-value="${full}${i > 1 ? "" : ", " + d.toLocaleDateString("en", { day: "numeric", month: "short" })}"><small>${label}</small><strong class="num">${d.getDate()}</strong></button>`);
+  }
+
+  const state = { date: strip.querySelector(".is-active").dataset.value, slot: "8:00 – 9:00 AM", mode: "home", place: "Flat 4B, Al-Hafeez Heights, Gulberg III" };
+  const save = () => window.ZL && ZL.store.set("visit", state);
+  document.addEventListener("DOMContentLoaded", save);
+
+  strip.addEventListener("choice", (e) => { state.date = e.detail; save(); });
+  document.getElementById("slots").addEventListener("choice", (e) => { state.slot = e.detail; save(); });
+  document.getElementById("mode").addEventListener("choice", (e) => {
+    state.mode = e.detail;
+    const home = e.detail === "home";
+    document.getElementById("address").hidden = !home;
+    const br = document.getElementById("branches");
+    br.hidden = home; br.classList.toggle("swap", !home);
+    state.place = home ? document.getElementById("addr-line").textContent : br.querySelector(".is-active").dataset.value;
+    save();
+  });
+  document.getElementById("branches").addEventListener("choice", (e) => { state.place = e.detail; save(); });
+  document.getElementById("addr-list").addEventListener("choice", () => {
+    const a = document.querySelector("#addr-list .is-active");
+    document.getElementById("addr-title").textContent = a.dataset.title;
+    document.getElementById("addr-line").textContent = a.dataset.line;
+    state.place = a.dataset.line; save();
+    setTimeout(ZL.closeSheets, 200);
+  });
+</script>
+</body>
+</html>

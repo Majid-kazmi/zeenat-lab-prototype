@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F5F7FB">
+<title>Bookings · Zeenat Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400..500,0..1,0&display=block">
+<link rel="stylesheet" href="../design-system/tokens.css">
+<link rel="stylesheet" href="../design-system/components.css">
+<script src="../scripts/app.js" defer></script>
+<style>
+  .booking { display: flex; flex-direction: column; gap: var(--s3); }
+  .booking__meta { display: flex; flex-direction: column; gap: 6px; }
+  .booking__meta span { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-2); }
+  .booking__meta .icon { font-size: 18px; color: var(--ink-3); }
+  .booking__actions { display: flex; gap: var(--s2); }
+  .booking__actions .btn { flex: 1; }
+  .panel { display: flex; flex-direction: column; gap: var(--s3); }
+  .panel.swap > * { animation: fade-up .45s var(--ease-out) both; }
+  .panel.swap > *:nth-child(2) { animation-delay: .05s; }
+  .panel.swap > *:nth-child(3) { animation-delay: .1s; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="topbar__inner">
+      <h1 class="topbar__heading">Bookings</h1>
+      <a class="icon-btn" href="11-tests.html" aria-label="New booking"><span class="icon">add</span></a>
+    </div>
+  </header>
+
+  <main class="page" data-stagger style="gap:var(--s4)">
+    <div class="segmented" data-choice id="tabs" role="tablist">
+      <button class="is-active" data-value="upcoming" role="tab">Upcoming</button>
+      <button data-value="past" role="tab">Past</button>
+    </div>
+
+    <!-- Upcoming -->
+    <section class="panel" id="upcoming">
+      <article class="card booking" id="b-48210">
+        <div class="row-between">
+          <span class="badge badge--info"><span class="badge__dot badge__dot--live"></span>On the way</span>
+          <span class="t-xs t-faint num">#ZL-48210</span>
+        </div>
+        <div>
+          <h2 class="t-strong">CBC, Fasting Blood Sugar</h2>
+          <p class="t-xs t-muted">For Tariq Mahmood</p>
+        </div>
+        <div class="booking__meta">
+          <span><span class="icon">event</span>Today · 8:00 – 9:00 AM</span>
+          <span><span class="icon">location_on</span>Home · Gulberg III</span>
+        </div>
+        <a class="btn btn--primary btn--block" href="17-live-tracking.html"><span class="icon icon--sm">near_me</span>Track live</a>
+        <div class="booking__actions">
+          <a class="btn btn--secondary btn--sm" href="14-schedule.html">Reschedule</a>
+          <button class="btn btn--ghost btn--sm" data-sheet-open="cancel-sheet">Cancel</button>
+        </div>
+      </article>
+
+      <article class="card booking">
+        <div class="row-between">
+          <span class="badge badge--warn"><span class="icon">hourglass_top</span>In review</span>
+          <span class="t-xs t-faint">Sent 10 min ago</span>
+        </div>
+        <div>
+          <h2 class="t-strong">Prescription</h2>
+          <p class="t-xs t-muted">For Zainab Bibi · 2 pages</p>
+        </div>
+        <p class="t-sm t-muted">We're reading it and will call you to confirm the tests and price.</p>
+      </article>
+    </section>
+
+    <!-- Past -->
+    <section class="panel" id="past" hidden>
+      <article class="card booking">
+        <div class="row-between">
+          <span class="badge badge--ok"><span class="icon">check</span>Completed</span>
+          <span class="t-xs t-faint">14 Aug 2026</span>
+        </div>
+        <div><h2 class="t-strong">Lipid Profile</h2><p class="t-xs t-muted">For Tariq Mahmood · Rs 2,100</p></div>
+        <div class="booking__actions">
+          <a class="btn btn--secondary btn--sm" href="31-report-detail.html"><span class="icon">description</span>Report</a>
+          <button class="btn btn--secondary btn--sm" data-rebook="lipid"><span class="icon">replay</span>Book again</button>
+        </div>
+      </article>
+
+      <article class="card booking">
+        <div class="row-between">
+          <span class="badge badge--ok"><span class="icon">check</span>Completed</span>
+          <span class="t-xs t-faint">22 May 2026</span>
+        </div>
+        <div><h2 class="t-strong">Liver Function Test (LFT)</h2><p class="t-xs t-muted">For Zainab Bibi · Rs 1,850</p></div>
+        <div class="booking__actions">
+          <a class="btn btn--secondary btn--sm" href="30-reports.html"><span class="icon">description</span>Report</a>
+          <button class="btn btn--secondary btn--sm" data-rebook="lft"><span class="icon">replay</span>Book again</button>
+        </div>
+      </article>
+
+      <article class="card booking">
+        <div class="row-between">
+          <span class="badge"><span class="icon">close</span>Cancelled</span>
+          <span class="t-xs t-faint">3 Mar 2026</span>
+        </div>
+        <div><h2 class="t-strong">Vitamin D</h2><p class="t-xs t-muted">For Amina Tariq</p></div>
+      </article>
+    </section>
+  </main>
+
+  <div class="sheet" id="cancel-sheet" role="dialog" aria-label="Cancel booking" aria-hidden="true">
+    <div class="sheet__handle"></div>
+    <h2 class="sheet__title">Cancel this booking?</h2>
+    <p class="t-muted" style="margin-bottom:var(--s5)">Rizwan is already on the way. If the time doesn't suit you, rescheduling is free.</p>
+    <a class="btn btn--primary btn--block" href="14-schedule.html">Reschedule instead</a>
+    <button class="btn btn--danger btn--block" id="do-cancel" style="margin-top:var(--s2)">Cancel booking</button>
+  </div>
+
+  <nav data-tabbar="bookings"></nav>
+</div>
+<script>
+  document.getElementById("tabs").addEventListener("choice", (e) => {
+    ["upcoming", "past"].forEach((id) => {
+      const p = document.getElementById(id);
+      p.hidden = id !== e.detail;
+      p.classList.remove("swap"); void p.offsetWidth; p.classList.add("swap");
+    });
+  });
+  document.getElementById("do-cancel").addEventListener("click", () => {
+    ZL.closeSheets();
+    const card = document.getElementById("b-48210");
+    card.style.transition = "opacity .3s, transform .3s";
+    card.style.opacity = "0"; card.style.transform = "scale(.96)";
+    setTimeout(() => card.remove(), 300);
+    ZL.toast("Booking cancelled", "event_busy");
+  });
+  document.addEventListener("click", (e) => {
+    const b = e.target.closest("[data-rebook]");
+    if (!b) return;
+    ZL.store.set("cart", [b.dataset.rebook]);
+    location.href = "14-schedule.html";
+  });
+</script>
+</body>
+</html>

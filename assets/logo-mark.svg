@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <!-- Placeholder mark. Replace this file with the official Zeenat Lab logo (keep the file name). -->
+  <rect width="48" height="48" rx="14" fill="#0F367A"/>
+  <path d="M24 10c5.5 7 9 12 9 16.5a9 9 0 0 1-18 0C15 22 18.5 17 24 10Z" fill="#fff"/>
+  <circle cx="34.5" cy="34.5" r="4.5" fill="#8CC63F" stroke="#0F367A" stroke-width="2.5"/>
+</svg>

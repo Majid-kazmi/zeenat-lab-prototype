@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F5F7FB">
+<title>Review &amp; pay · Zeenat Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400..500,0..1,0&display=block">
+<link rel="stylesheet" href="../design-system/tokens.css">
+<link rel="stylesheet" href="../design-system/components.css">
+<script src="../scripts/app.js" defer></script>
+<style>
+  .pay-logo { width: 40px; height: 28px; border-radius: 7px; display: grid; place-items: center; font-size: 10px; font-weight: 700; flex-shrink: 0; letter-spacing: -.01em; }
+  .promo { display: flex; gap: var(--s2); }
+  .promo .input { height: 46px; }
+  .promo .btn { height: 46px; }
+  .spinner { width: 20px; height: 20px; border-radius: 50%; border: 2.5px solid rgba(255,255,255,.35); border-top-color: #fff; animation: spin .7s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body data-cart-default="cbc,fbs">
+<div class="app">
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a class="icon-btn" href="14-schedule.html" aria-label="Back"><span class="icon">arrow_back</span></a>
+      <div class="topbar__title">Review &amp; pay<small>Step 2 of 2</small></div>
+      <span class="topbar__spacer"></span>
+    </div>
+    <div class="steps" aria-hidden="true"><span class="is-done"></span><span class="is-current"></span></div>
+  </header>
+
+  <main class="page page--flow" data-stagger>
+    <!-- Visit -->
+    <section class="card stack">
+      <div class="row-between"><h2 class="t-strong">Visit</h2><a class="link" href="14-schedule.html">Edit</a></div>
+      <div class="row"><span class="icon t-faint">event</span><span class="t-sm"><span id="v-date">Tomorrow</span> · <span id="v-slot" class="num">8:00 – 9:00 AM</span></span></div>
+      <div class="row"><span class="icon t-faint" id="v-icon">location_on</span><span class="t-sm" id="v-place">Flat 4B, Al-Hafeez Heights, Gulberg III</span></div>
+      <div class="row"><span class="icon t-faint">person</span><span class="t-sm" data-patient-name>Tariq Mahmood</span></div>
+    </section>
+
+    <!-- Bill -->
+    <section class="card">
+      <h2 class="t-strong" style="margin-bottom:var(--s2)">Bill</h2>
+      <div data-cart-lines></div>
+      <div class="row-between t-sm" style="padding:6px 0"><span>Home collection</span><span class="t-ok t-strong" id="fee">Free</span></div>
+      <div class="row-between t-sm" style="padding:6px 0" id="discount-row" hidden><span>Promo <span id="promo-name"></span></span><span class="t-ok t-strong num" id="discount"></span></div>
+      <hr class="divider" style="margin:var(--s3) 0">
+      <div class="row-between"><strong class="t-strong">Total</strong><strong class="t-h num" id="grand">Rs 0</strong></div>
+    </section>
+
+    <div class="promo">
+      <input class="input" id="promo" placeholder="Promo code" autocapitalize="characters" aria-label="Promo code">
+      <button class="btn btn--secondary" id="apply">Apply</button>
+    </div>
+
+    <!-- Payment -->
+    <section class="stack">
+      <h2 class="t-strong">Pay with</h2>
+      <div class="stack-sm" data-choice id="pay" role="radiogroup">
+        <button class="option is-active" data-value="cash">
+          <span class="pay-logo" style="background:var(--ok-bg);color:var(--ok)"><span class="icon icon--sm">payments</span></span>
+          <span class="grow"><strong class="t-sm t-strong" style="display:block">Cash at visit</strong><span class="t-xs t-muted">Pay when we collect the sample</span></span>
+          <span class="option__radio"></span>
+        </button>
+        <button class="option" data-value="jazzcash">
+          <span class="pay-logo" style="background:#FFF1E6;color:#C2410C">Jazz</span>
+          <span class="grow"><strong class="t-sm t-strong" style="display:block">JazzCash</strong><span class="t-xs t-muted">Mobile wallet</span></span>
+          <span class="option__radio"></span>
+        </button>
+        <button class="option" data-value="easypaisa">
+          <span class="pay-logo" style="background:#E8F7EE;color:#15803D">ep</span>
+          <span class="grow"><strong class="t-sm t-strong" style="display:block">Easypaisa</strong><span class="t-xs t-muted">Mobile wallet</span></span>
+          <span class="option__radio"></span>
+        </button>
+        <button class="option" data-value="card">
+          <span class="pay-logo" style="background:var(--blue-50);color:var(--primary)"><span class="icon icon--sm">credit_card</span></span>
+          <span class="grow"><strong class="t-sm t-strong" style="display:block">Debit or credit card</strong><span class="t-xs t-muted">Visa, Mastercard, PayPak</span></span>
+          <span class="option__radio"></span>
+        </button>
+      </div>
+    </section>
+
+    <p class="t-xs t-faint center">Free cancellation up to 2 hours before the visit.</p>
+  </main>
+
+  <div class="action-bar">
+    <div class="action-bar__sum"><small>Total</small><strong id="bar-total">Rs 0</strong></div>
+    <button class="btn btn--primary" id="confirm">Confirm booking</button>
+  </div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const visit = ZL.store.get("visit", null);
+    if (visit) {
+      document.getElementById("v-date").textContent = visit.date;
+      document.getElementById("v-slot").textContent = visit.slot;
+      document.getElementById("v-place").textContent = visit.place;
+      if (visit.mode === "lab") { document.getElementById("v-icon").textContent = "apartment"; document.getElementById("fee").textContent = "—"; }
+    }
+
+    let discount = 0;
+    const render = () => {
+      const total = ZL.cart.total() - discount;
+      document.getElementById("grand").textContent = ZL.pkr(total);
+      document.getElementById("bar-total").textContent = ZL.pkr(total);
+    };
+    render();
+
+    document.getElementById("apply").addEventListener("click", () => {
+      const code = document.getElementById("promo").value.trim().toUpperCase();
+      if (!code) return;
+      if (code === "FAMILY10") {
+        discount = Math.round(ZL.cart.total() * 0.1);
+        document.getElementById("promo-name").textContent = code;
+        document.getElementById("discount").textContent = "− " + ZL.pkr(discount);
+        document.getElementById("discount-row").hidden = false;
+        ZL.toast("Promo applied", "sell");
+        render();
+      } else {
+        ZL.toast("That code isn't valid", "error");
+      }
+    });
+
+    const btn = document.getElementById("confirm");
+    btn.addEventListener("click", () => {
+      btn.innerHTML = '<span class="spinner"></span>';
+      btn.style.pointerEvents = "none";
+      setTimeout(() => (location.href = "16-booking-confirmed.html"), 900);
+    });
+  });
+</script>
+</body>
+</html>

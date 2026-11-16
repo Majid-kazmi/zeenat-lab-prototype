@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F5F7FB">
+<title>Profile · Zeenat Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400..500,0..1,0&display=block">
+<link rel="stylesheet" href="../design-system/tokens.css">
+<link rel="stylesheet" href="../design-system/components.css">
+<script src="../scripts/app.js" defer></script>
+<style>
+  .group-label { font-size: var(--fs-xs); font-weight: 600; color: var(--ink-3); padding: 0 var(--s1) var(--s2); }
+  .list-item__end { font-size: var(--fs-sm); color: var(--ink-3); }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="topbar__inner">
+      <h1 class="topbar__heading">Profile</h1>
+    </div>
+  </header>
+
+  <main class="page" data-stagger>
+    <section class="card card--lg row">
+      <span class="avatar avatar--lg avatar--solid">TM</span>
+      <span class="grow">
+        <strong class="t-h" style="display:block">Tariq Mahmood</strong>
+        <span class="t-sm t-muted num">+92 300 1234567</span>
+      </span>
+      <button class="icon-btn" aria-label="Edit profile" data-toast="Edit profile opens here" data-toast-icon="edit"><span class="icon">edit</span></button>
+    </section>
+
+    <section>
+      <p class="group-label">Your account</p>
+      <div class="card card--flush list">
+        <a class="list-item" href="41-family.html">
+          <span class="list-item__icon"><span class="icon">group</span></span>
+          <span class="grow t-sm t-strong">Family members</span>
+          <span class="list-item__end">4</span><span class="icon list-item__chev">chevron_right</span>
+        </a>
+        <button class="list-item" style="width:100%;text-align:left" data-toast="Saved addresses opens here" data-toast-icon="location_on">
+          <span class="list-item__icon"><span class="icon">location_on</span></span>
+          <span class="grow t-sm t-strong">Saved addresses</span>
+          <span class="list-item__end">2</span><span class="icon list-item__chev">chevron_right</span>
+        </button>
+        <a class="list-item" href="30-reports.html">
+          <span class="list-item__icon"><span class="icon">folder_shared</span></span>
+          <span class="grow t-sm t-strong">All reports</span>
+          <span class="icon list-item__chev">chevron_right</span>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <p class="group-label">Preferences</p>
+      <div class="card card--flush list">
+        <a class="list-item" href="43-notifications.html">
+          <span class="list-item__icon"><span class="icon">notifications</span></span>
+          <span class="grow t-sm t-strong">Notifications</span>
+          <span class="icon list-item__chev">chevron_right</span>
+        </a>
+        <button class="list-item" style="width:100%;text-align:left" data-sheet-open="lang-sheet">
+          <span class="list-item__icon"><span class="icon">translate</span></span>
+          <span class="grow t-sm t-strong">Language</span>
+          <span class="list-item__end" id="lang">English</span><span class="icon list-item__chev">chevron_right</span>
+        </button>
+      </div>
+    </section>
+
+    <section>
+      <p class="group-label">Help</p>
+      <div class="card card--flush list">
+        <a class="list-item" data-helpline href="#">
+          <span class="list-item__icon"><span class="icon">call</span></span>
+          <span class="grow t-sm t-strong">Call support</span>
+          <span class="icon list-item__chev">chevron_right</span>
+        </a>
+        <a class="list-item" href="https://wa.me/" target="_blank" rel="noopener">
+          <span class="list-item__icon"><span class="icon">chat</span></span>
+          <span class="grow t-sm t-strong">Chat on WhatsApp</span>
+          <span class="icon list-item__chev">open_in_new</span>
+        </a>
+        <a class="list-item" href="#">
+          <span class="list-item__icon"><span class="icon">shield</span></span>
+          <span class="grow t-sm t-strong">Privacy &amp; terms</span>
+          <span class="icon list-item__chev">chevron_right</span>
+        </a>
+      </div>
+    </section>
+
+    <button class="btn btn--ghost btn--block" data-sheet-open="logout-sheet" style="color:var(--alert)"><span class="icon icon--sm">logout</span>Log out</button>
+    <p class="t-xs t-faint center">Version 1.0.0</p>
+  </main>
+
+  <div class="sheet" id="lang-sheet" role="dialog" aria-label="Language" aria-hidden="true">
+    <div class="sheet__handle"></div>
+    <h2 class="sheet__title">Language</h2>
+    <div class="stack-sm" data-choice id="lang-list">
+      <button class="option is-active" data-value="English"><span class="grow t-strong">English</span><span class="option__radio"></span></button>
+      <button class="option" data-value="اردو"><span class="grow t-strong" lang="ur" dir="rtl" style="text-align:left">اردو</span><span class="option__radio"></span></button>
+    </div>
+  </div>
+
+  <div class="sheet" id="logout-sheet" role="dialog" aria-label="Log out" aria-hidden="true">
+    <div class="sheet__handle"></div>
+    <h2 class="sheet__title">Log out?</h2>
+    <p class="t-muted" style="margin-bottom:var(--s5)">Your bookings and reports stay safe. Sign in again with your number anytime.</p>
+    <a class="btn btn--danger btn--block" href="02-login.html">Log out</a>
+    <button class="btn btn--ghost btn--block" data-sheet-close style="margin-top:var(--s2)">Stay signed in</button>
+  </div>
+
+  <nav data-tabbar="profile"></nav>
+</div>
+<script>
+  document.getElementById("lang-list").addEventListener("choice", (e) => {
+    document.getElementById("lang").textContent = e.detail;
+    setTimeout(ZL.closeSheets, 200);
+  });
+</script>
+</body>
+</html>

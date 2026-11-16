@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F5F7FB">
+<title>Reports · Zeenat Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400..500,0..1,0&display=block">
+<link rel="stylesheet" href="../design-system/tokens.css">
+<link rel="stylesheet" href="../design-system/components.css">
+<script src="../scripts/app.js" defer></script>
+<style>
+  .progress { height: 6px; border-radius: 6px; background: var(--surface-2); overflow: hidden; position: relative; }
+  .progress::after { content: ""; position: absolute; inset: 0 40% 0 0; border-radius: inherit; background: var(--warn); transform-origin: left; animation: grow-x 1.2s var(--ease-out) .3s both; }
+  .r-item[hidden] { display: none; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="topbar__inner">
+      <h1 class="topbar__heading">Reports</h1>
+      <a class="icon-btn" href="11-tests.html?search=1" aria-label="Search"><span class="icon">search</span></a>
+    </div>
+  </header>
+
+  <main class="page" data-stagger style="gap:var(--s5)">
+    <div class="chips" data-choice id="people" role="radiogroup" aria-label="Family member">
+      <button class="chip is-active" data-value="all">Everyone</button>
+      <button class="chip" data-value="self"><span class="avatar avatar--sm" style="width:22px;height:22px;font-size:9px;margin-left:-6px">TM</span>Tariq</button>
+      <button class="chip" data-value="mother"><span class="avatar avatar--sm" style="width:22px;height:22px;font-size:9px;margin-left:-6px">ZB</span>Zainab</button>
+      <button class="chip" data-value="wife"><span class="avatar avatar--sm" style="width:22px;height:22px;font-size:9px;margin-left:-6px">AT</span>Amina</button>
+      <button class="chip" data-value="son"><span class="avatar avatar--sm" style="width:22px;height:22px;font-size:9px;margin-left:-6px">HT</span>Hamza</button>
+    </div>
+
+    <!-- New -->
+    <section class="r-item" data-person="self">
+      <div class="section-head"><h2>New</h2><span class="t-xs t-faint">Today, 1:15 PM</span></div>
+      <div class="card card--lg stack">
+        <div class="row-between">
+          <span class="badge badge--warn"><span class="icon">priority_high</span>1 value to review</span>
+          <span class="t-xs t-faint">Tariq</span>
+        </div>
+        <div>
+          <h3 class="t-h">Complete Blood Count (CBC)</h3>
+          <p class="t-sm t-muted" style="margin-top:2px">Everything else is in the normal range.</p>
+        </div>
+        <div class="grid-2">
+          <a class="btn btn--primary btn--sm" href="31-report-detail.html" style="height:44px">View results</a>
+          <button class="btn btn--secondary btn--sm" style="height:44px" data-toast="PDF saved to Downloads" data-toast-icon="download"><span class="icon">download</span>PDF</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- In progress -->
+    <section class="r-item" data-person="self">
+      <div class="section-head"><h2>In progress</h2></div>
+      <div class="card stack-sm">
+        <div class="row-between"><strong class="t-sm t-strong">Fasting Blood Sugar</strong><span class="t-xs t-muted">Ready by ~6 PM</span></div>
+        <div class="progress" aria-label="Processing"></div>
+        <p class="t-xs t-faint">Sample received at the lab</p>
+      </div>
+    </section>
+
+    <!-- Earlier -->
+    <section>
+      <div class="section-head"><h2>Earlier</h2></div>
+      <div class="card card--flush list" id="earlier">
+        <a class="list-item r-item" data-person="self" href="31-report-detail.html">
+          <span class="list-item__icon"><span class="icon">cardiology</span></span>
+          <span class="grow"><strong class="t-sm t-strong" style="display:block">Lipid Profile</strong><span class="t-xs t-muted">Tariq · 14 Aug 2026</span></span>
+          <span class="badge badge--ok">Normal</span>
+        </a>
+        <a class="list-item r-item" data-person="mother" href="31-report-detail.html">
+          <span class="list-item__icon"><span class="icon">labs</span></span>
+          <span class="grow"><strong class="t-sm t-strong" style="display:block">Liver Function Test</strong><span class="t-xs t-muted">Zainab · 22 May 2026</span></span>
+          <span class="badge badge--ok">Normal</span>
+        </a>
+        <a class="list-item r-item" data-person="wife" href="31-report-detail.html">
+          <span class="list-item__icon"><span class="icon">sunny</span></span>
+          <span class="grow"><strong class="t-sm t-strong" style="display:block">Vitamin D</strong><span class="t-xs t-muted">Amina · 10 Jan 2026</span></span>
+          <span class="badge badge--warn">Low</span>
+        </a>
+      </div>
+      <div class="card center stack-sm" id="none" hidden style="padding:var(--s8) var(--s5)">
+        <span class="icon icon--lg t-faint" style="margin:0 auto">folder_open</span>
+        <strong class="t-strong">No reports yet</strong>
+        <p class="t-sm t-muted">Reports for this person will show up here.</p>
+        <a class="btn btn--secondary btn--sm" href="11-tests.html" style="align-self:center;margin-top:var(--s2)">Book a test</a>
+      </div>
+    </section>
+
+    <a class="card card--soft row" data-helpline href="#">
+      <span class="icon" style="color:var(--primary)">support_agent</span>
+      <span class="grow t-sm">Questions about a result? <strong class="t-primary">Talk to our team</strong></span>
+    </a>
+  </main>
+
+  <nav data-tabbar="reports"></nav>
+</div>
+<script>
+  document.getElementById("people").addEventListener("choice", (e) => {
+    let shown = 0;
+    document.querySelectorAll(".r-item").forEach((el) => {
+      const ok = e.detail === "all" || el.dataset.person === e.detail;
+      el.hidden = !ok;
+      if (ok && el.closest("#earlier")) shown++;
+    });
+    document.getElementById("earlier").hidden = shown === 0;
+    document.getElementById("none").hidden = shown > 0;
+  });
+</script>
+</body>
+</html>
